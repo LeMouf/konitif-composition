@@ -44,3 +44,9 @@ console.log(run(process.execPath, ['--input-type=module', '-e', `
   console.log('External archive consumer OK');
 `], consumer));
 console.log(JSON.stringify({ integrity: packed.integrity, bytes: packed.size, files: files.length, evidence: temp }));
+if (process.env.COMPOSITION_RELEASE_ARCHIVE === 'true') {
+  const release = join(root, '.release');
+  mkdirSync(release, { recursive: true });
+  cpSync(join(temp, packed.filename), join(release, 'composition.tgz'), { errorOnExist: true, force: false });
+  console.log('Verified archive retained at .release/composition.tgz');
+}

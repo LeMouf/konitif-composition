@@ -18,12 +18,24 @@ on every PR.
 
 ## Publication preparation
 
-No publishing workflow is enabled in this baseline. Before first publication,
-prepare a tag/version check and publication of the verified archive, configure
-the protected `npm-release` environment, and configure npm trusted publishing
-for this repository and the exact workflow filename. Never reuse Core's
-trusted-publisher binding for Composition. First npm publication and subsequent
-OIDC bootstrap must be coordinated explicitly. Never commit npm credentials.
+The `publish.yml` workflow is disabled unless the repository variable
+`COMPOSITION_NPM_PUBLISH_ENABLED` is exactly `true`. Keep it absent until setup
+is complete. Only version-matching `v*` tags on main history may publish.
+The job verifies and publishes the same archive, with no lifecycle scripts
+at upload time. It refuses old preinstalled npm/Node versions without upgrading.
+
+Before enabling it, configure the `npm-release` environment with LeMouf as
+required reviewer, no administrative bypass, and allowed tags `v*`. For solo
+operation, allow self-review. Configure npm trusted publishing with user
+`LeMouf`, repository `konitif-composition`, filename `publish.yml`, environment
+`npm-release`, and permission to publish. No long-lived npm secret is required.
+Never reuse Core's trusted-publisher binding. First npm publication and OIDC
+bootstrap must be coordinated explicitly; do not tag or publish merely to test
+the setup. A published version cannot be reused for another artifact.
+
+Merge the workflow PR before enabling publication; branch validation does not
+exercise npm authentication. Environment approval is separate from PR merging.
+Never commit npm credentials. See https://docs.npmjs.com/trusted-publishers/.
 
 The package is source-available under PolyForm Noncommercial 1.0.0, not OSI
 open source. This repository grants no separate partner licence.

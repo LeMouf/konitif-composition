@@ -1,0 +1,41 @@
+name: Publish Composition
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: read
+concurrency:
+  group: composition-npm-publish
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.repository == 'LeMouf/konitif-composition' && vars.COMPOSITION_NPM_PUBLISH_ENABLED == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment: npm-release
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Require tag on main history
+        run: git merge-base --is-ancestor HEAD origin/main
+      - run: bash scripts/select-ci-runtime.sh
+      - name: Check preinstalled publishing tools
+        run: >-
+          node --input-type=module -e "import {execFileSync} from 'node:child_process';
+          import {assertPublishingTools} from './scripts/release-contract.mjs';
+          assertPublishingTools(process.versions.node, execFileSync('npm',['--version'],{encoding:'utf8'}).trim());"
+      - run: npm ci --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org
+      - run: npm run build
+      - run: npm test
+      - run: node scripts/check-release.mjs
+      - name: Verify exact archive to publish
+        run: npm run verify:package
+        env:
+          COMPOSITION_RELEASE_ARCHIVE: 'true'
+      - name: Publish verified archive through npm OIDC
+        run: npm publish .release/composition.tgz --access public --provenance --ignore-scripts --registry=https://registry.npmjs.org
