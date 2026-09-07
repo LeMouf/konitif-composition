@@ -4,10 +4,10 @@ import { readFileSync } from 'node:fs';
 import { assertReleaseContract, assertPublishingTools } from '../scripts/release-contract.mjs';
 const read = file => readFileSync(new URL(`../${file}`, import.meta.url), 'utf8');
 const valid = () => ({ manifest: JSON.parse(read('package.json')), lock: JSON.parse(read('package-lock.json')),
-  repository: 'LeMouf/konitif-composition', event: 'push', ref: 'refs/tags/v0.284.1' });
+  repository: 'LeMouf/konitif-composition', event: 'push', ref: `refs/tags/v${JSON.parse(read('package.json')).version}` });
 test('release requires exact repository, tag, package and lock version', () => {
   assert.doesNotThrow(() => assertReleaseContract(valid()));
-  for (const change of [{repository:'LeMouf/konitif-core'},{event:'pull_request'},{ref:'refs/heads/main'},{ref:'refs/tags/v0.284.2'}]) {
+  for (const change of [{repository:'LeMouf/konitif-core'},{event:'pull_request'},{ref:'refs/heads/main'},{ref:'refs/tags/v0.0.0'}]) {
     assert.throws(() => assertReleaseContract({...valid(),...change}));
   }
   for (const change of [{version:'0.284.1-beta.1'},{private:true},{name:'@konitif/core'},{license:'MIT'}]) {
