@@ -1,7 +1,7 @@
 {
   "name": "@konitif/composition",
   "license": "PolyForm-Noncommercial-1.0.0",
-  "version": "0.284.1",
+  "version": "0.284.2",
   "private": false,
   "type": "module",
   "description": "Amodal workflow composition contracts, validation and commit boundary.",
