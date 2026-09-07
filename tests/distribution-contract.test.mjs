@@ -34,7 +34,7 @@ test('CI is validation-only with pinned checkout and locked install', () => {
   const ci = read('.github/workflows/ci.yml');
   assert.match(ci, /contents: read/);
   assert.match(ci, /persist-credentials: false/);
-  assert.match(ci, /actions\/checkout@11d5960a326750d5838078e36cf38b85af677262/);
+  assert.match(ci, /actions\/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1/);
   assert.match(ci, /npm ci --ignore-scripts/);
   assert.match(ci, /npm run verify:package/);
   assert.doesNotMatch(ci, /npm publish|id-token: write|curl |wget /);
