@@ -1,25 +1,25 @@
 {
   "schemaVersion": "1.0.0",
   "package": "@konitif/composition",
-  "intent": "Construire des compositions sans transférer leur autorité au runtime.",
+  "intent": "Build compositions without transferring their authority to the runtime.",
   "clusters": [
     {
       "id": "model",
-      "title": "Modèle de composition",
-      "summary": "Formes canoniques des plans, étapes et dépendances.",
-      "authority": "Contrats authored de composition.",
+      "title": "Composition model",
+      "summary": "Canonical forms for plans, steps, and dependencies.",
+      "authority": "Authored composition contracts.",
       "owns": [
-        "structure logique",
-        "relations"
+        "logical structure",
+        "relationships"
       ],
       "doesNotOwn": [
-        "exécution",
+        "execution",
         "projection"
       ],
       "workflow": [
-        "Déclarer",
-        "Relier",
-        "Valider"
+        "Declare",
+        "Connect",
+        "Validate"
       ],
       "sources": [
         "model.ts"
@@ -27,20 +27,20 @@
     },
     {
       "id": "authority",
-      "title": "Autorité et évolution",
-      "summary": "Règles de propriété et de mutation des compositions.",
-      "authority": "Frontière de modification.",
+      "title": "Authority and evolution",
+      "summary": "Ownership and mutation rules for compositions.",
+      "authority": "Modification boundary.",
       "owns": [
         "admission",
-        "traçabilité"
+        "traceability"
       ],
       "doesNotOwn": [
-        "effet runtime"
+        "runtime effect"
       ],
       "workflow": [
-        "Proposer",
-        "Qualifier",
-        "Engager"
+        "Propose",
+        "Qualify",
+        "Commit"
       ],
       "sources": [
         "authority.ts"
@@ -49,18 +49,18 @@
     {
       "id": "construction",
       "title": "Construction",
-      "summary": "Aides pures pour assembler les formes canoniques.",
-      "authority": "Transformation sans état caché.",
+      "summary": "Pure helpers for assembling canonical forms.",
+      "authority": "Transformation without hidden state.",
       "owns": [
-        "construction déterministe"
+        "deterministic construction"
       ],
       "doesNotOwn": [
-        "persistance"
+        "persistence"
       ],
       "workflow": [
-        "Recevoir",
-        "Construire",
-        "Retourner"
+        "Receive",
+        "Build",
+        "Return"
       ],
       "sources": [
         "helpers.ts"

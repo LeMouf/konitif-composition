@@ -1,28 +1,58 @@
 # @konitif/composition
 
-Amodal Workflow Composition authority for KONITIF workbenches.
+Amodal contracts and pure helpers for authoring, validating and committing
+workflow compositions.
 
-This package owns Workflow, Composition, Module, Connection, Domain and Contract definitions together with their validation and commit boundary. It has no dependency on Nodal, Timeline, Viewer or a particular workbench shell.
+## Installation
 
-Tools consume it according to their role:
+```sh
+npm install @konitif/composition
+```
 
-- a Viewer reads a Workflow Composition;
-- Nodal projects it as an editable graph and submits edits back through a commit adapter;
-- a runtime executes or adapts the Composition without transferring authored authority to its execution representation.
+## What it provides
 
-## Usage
+- Canonical Workflow, Composition, Module, Connection, Domain and Contract
+  definitions.
+- Structural validation for authored compositions.
+- A commit boundary that preserves the previous composition when a candidate
+  is rejected.
+- Pure construction helpers with no UI or runtime dependency.
 
-```js
+## Authority boundary
+
+This package owns authored composition structure and its validation rules. It
+does not execute workflows, render graphs or timelines, select runtime
+providers, or confirm real-world effects. Editors and runtimes consume the same
+composition contract without acquiring its authority.
+
+## Quick start
+
+```ts
 import { createEmptyWorkflow, validateWorkflow } from '@konitif/composition';
 
 const workflow = createEmptyWorkflow({ id: 'example', title: 'Example' });
 const validation = validateWorkflow(workflow);
+
+if (!validation.valid) {
+  console.error(validation.issues);
+}
 ```
 
-Validation checks composition structure, not successful execution or real-world
-effects. A rejected commit returns a copy of the previous workflow.
+Validation proves structural admissibility, not successful execution.
 
-## Licence
+## Public entry points
 
-Source-available under [PolyForm Noncommercial 1.0.0](LICENSE.md), not OSI
-open source. Third-party elements retain their own rights and notices.
+| Entry | Purpose |
+| --- | --- |
+| `@konitif/composition` | Composition contracts, validation and construction helpers. |
+
+## Reference
+
+See [`reference/`](reference/) for the machine-readable capability catalog and
+authority diagrams. These files document the package; they are not runtime
+configuration or executable authority.
+
+## License
+
+Source-available under [PolyForm Noncommercial 1.0.0](LICENSE.md), not OSI open
+source. Commercial use requires separate written authorization.
