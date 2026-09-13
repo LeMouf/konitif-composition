@@ -4,34 +4,34 @@
   "diagrams": [
     {
       "id": "composition-admission",
-      "title": "Construire puis admettre une composition",
+      "title": "Build and admit a composition",
       "kind": "lifecycle",
-      "summary": "Une composition reste authored tant que sa structure n'a pas été validée et admise pour une réalisation.",
+      "summary": "A composition remains authored until its structure has been validated and admitted for execution.",
       "nodes": [
         {
           "id": "need",
-          "label": "Besoin structuré",
-          "description": "L'effet recherché et ses contraintes sont connus."
+          "label": "Structured need",
+          "description": "The intended effect and its constraints are known."
         },
         {
           "id": "draft",
-          "label": "Composition brouillon",
-          "description": "Étapes et dépendances sont assemblées."
+          "label": "Draft composition",
+          "description": "Steps and dependencies are assembled."
         },
         {
           "id": "validation",
           "label": "Validation",
-          "description": "Les invariants structurels sont contrôlés."
+          "description": "Structural invariants are checked."
         },
         {
           "id": "admission",
           "label": "Admission",
-          "description": "Une autorité accepte la composition."
+          "description": "An authority accepts the composition."
         },
         {
           "id": "plan",
-          "label": "Plan disponible",
-          "description": "Le runtime peut la consommer sans en inventer le sens.",
+          "label": "Available plan",
+          "description": "The runtime can consume it without inventing its meaning.",
           "tone": "runtime"
         }
       ],
@@ -53,7 +53,7 @@
           "to": "plan"
         }
       ],
-      "caption": "Valider une structure ne prouve ni son exécution ni son effet réel."
+      "caption": "Validating a structure proves neither its execution nor its real effect."
     }
   ]
 }
