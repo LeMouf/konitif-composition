@@ -1,7 +1,7 @@
 # @konitif/composition
 
 Amodal contracts and pure helpers for authoring, validating and committing
-workflow compositions.
+executable compositions.
 
 ## Installation
 
@@ -21,7 +21,7 @@ npm install @konitif/composition
 ## Authority boundary
 
 This package owns authored composition structure and its validation rules. It
-does not execute workflows, render graphs or timelines, select runtime
+does not execute compositions, render graph or temporal projections, select runtime
 providers, or confirm real-world effects. Editors and runtimes consume the same
 composition contract without acquiring its authority.
 

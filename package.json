@@ -1,12 +1,17 @@
 {
   "name": "@konitif/composition",
   "license": "PolyForm-Noncommercial-1.0.0",
-  "version": "0.284.3",
+  "version": "0.284.4",
   "private": false,
   "type": "module",
-  "description": "Amodal workflow composition contracts, validation and commit boundary.",
-  "repository": { "type": "git", "url": "git+https://github.com/LeMouf/konitif-composition.git" },
-  "publishConfig": { "access": "public" },
+  "description": "Amodal executable-composition contracts, validation and commit boundary.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeMouf/konitif-composition.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -30,5 +35,7 @@
     "prepack": "npm run build && npm test",
     "prepublishOnly": "npm run build && npm test"
   },
-  "devDependencies": { "typescript": "5.9.3" }
+  "devDependencies": {
+    "typescript": "5.9.3"
+  }
 }
