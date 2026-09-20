@@ -1,7 +1,7 @@
 {
   "name": "@konitif/composition",
   "license": "PolyForm-Noncommercial-1.0.0",
-  "version": "0.284.4",
+  "version": "0.284.5",
   "private": false,
   "type": "module",
   "description": "Amodal executable-composition contracts, validation and commit boundary.",
