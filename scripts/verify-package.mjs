@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { dirname, join, resolve } from 'node:path';
+import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
@@ -16,7 +16,11 @@ assert.equal(manifest.name, '@konitif/composition');
 for (const field of ['dependencies', 'peerDependencies', 'optionalDependencies']) {
   assert.equal(Object.keys(manifest[field] ?? {}).length, 0);
 }
-const [packed] = JSON.parse(run('npm', ['pack', '--offline', '--ignore-scripts', '--json', '--pack-destination', temp]));
+const packArgs = ['pack', '--offline', '--ignore-scripts', '--json', '--pack-destination', temp];
+const packOutput = process.platform === 'win32'
+  ? run(process.execPath, [join(dirname(process.execPath), 'node_modules/npm/bin/npm-cli.js'), ...packArgs])
+  : run('npm', packArgs);
+const [packed] = JSON.parse(packOutput);
 const files = packed.files.map(file => file.path);
 for (const file of files) assert.match(file, /^(dist\/|src\/|reference\/|package\.json$|README\.md$|LICENSE\.md$)/);
 for (const file of ['dist/index.js', 'dist/index.d.ts', 'src/index.ts', 'LICENSE.md', 'reference/catalog.json', 'reference/diagrams.json']) assert.ok(files.includes(file), file);
@@ -29,7 +33,8 @@ for (const file of files.filter(file => file.endsWith('.map'))) {
   const map = JSON.parse(readFileSync(mapPath, 'utf8'));
   for (const source of map.sources) {
     const path = resolve(dirname(mapPath), map.sourceRoot ?? '', source);
-    assert.ok(path.startsWith(dependency + '/') && existsSync(path), `Source map: ${file}`);
+    const sourcePath = relative(dependency, path);
+    assert.ok(sourcePath && !sourcePath.startsWith('..') && !sourcePath.includes(':') && existsSync(path), `Source map: ${file}`);
   }
 }
 cpSync(join(root, 'tests/consumer.mts'), join(consumer, 'consumer.mts'));
